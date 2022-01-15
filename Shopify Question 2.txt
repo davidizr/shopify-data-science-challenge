@@ -1,0 +1,74 @@
+Question 2:
+
+a.) How many orders were shipped by Speedy Express in total?
+		
+Step 1: Find Shipper ID from Shippers table
+	
+Input: 	SELECT ShipperID FROM Shippers
+	WHERE ShipperName="Speedy Express";
+
+Output: 	ShipperID: 1
+
+Step 2: Count the number of orders given the ShipperID above from Orders table
+	
+Input:	SELECT COUNT (*) 
+	FROM Orders
+	WHERE ShipperID=3;
+
+Output: 	54
+
+b.) What is the last name of the employee with the most orders?
+
+Step 1: Order the employee ID by number of orders from Orders table
+
+Input: 	SELECT EmployeeID, COUNT(*)
+	FROM Orders
+	GROUP BY EmployeeID
+	ORDER BY COUNT(*) DESC;
+
+Output: 	Employee ID	Count
+	4		40
+	3 		31 
+	1 		29 
+	8 		27 
+	2 		20 
+	6 		18 
+	7 		14 
+	5 		11 
+	9 		6 
+	
+Step 2: Reference Employee Table to get the last name of the employee who’s Employee ID is 4
+
+Input: 	SELECT LastName FROM Employees
+	WHERE EmployeeID=4;
+
+Output:	“Peacock”
+
+c.) What product was ordered the most by customers in Germany?
+
+Step 1: Count the number of rows of productID by creating an Inner Join with Customers and orders 
+using matching values of CustomerID, Inner Join new table with order details using matching values 
+of OrderID, add the condition that country=“Germany”, group by productID, and order the count in 
+descending order
+
+Input: 	SELECT productID, SUM(Quantity)
+	FROM ((orders
+	INNER JOIN Customers ON orders.CustomerID=customers.CustomerID)
+	INNER JOIN OrderDetails ON orders.OrderID=OrderDetails.OrderID)
+	WHERE country="Germany"
+	GROUP BY productID
+	ORDER BY SUM(Quantity) DESC;
+
+Output:	Product ID	Count
+	40  		160 
+	31  		125 
+	23  		105 
+	35  		100
+*Rest doesn’t matter*
+
+Step 2: Reference productID=40 with the Products Table to get the name of product
+
+Input:	SELECT ProductName FROM Products
+	WHERE productID=40;
+
+Output: 	“Boston Crab Meat”
