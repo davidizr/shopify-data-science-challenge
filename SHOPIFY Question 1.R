@@ -4,7 +4,7 @@ library(readxl)
 library(ggplot2)
 
 #import data
-data <- read_excel("Desktop/Shopify Application/Dataset.xlsx")
+data <- read_excel("Desktop/Shopify/Dataset.xlsx")
 
 #Create the dataframe and rename
 shopifydf<-data.frame(
